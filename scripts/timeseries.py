@@ -36,6 +36,7 @@ while True:
 	for message in timeseries.receive_messages(WaitTimeSeconds=10):
 		try:
 			payload = json.loads(message.body)
+			print payload
 			devid = payload.get('devid', None)
 			sensor = int(payload.get('sensor', 0))
 			variables = payload.get('variables', [])
@@ -55,4 +56,4 @@ while True:
 
 			message.delete()
 		except Exception, e:
-			print 
+			print e
