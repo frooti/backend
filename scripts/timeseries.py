@@ -51,7 +51,7 @@ while True:
 						if sensor_config['variables'][vid]['type'] == 'number':
 							d = float(d)
 							key = devid+'_'+sid+'_'+vid
-							REDIS.ZADD(key, timestamp, d)
+							REDIS.zadd(key, timestamp, d)
 
 			message.delete()
 		except Exception, e:
