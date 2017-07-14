@@ -26,8 +26,6 @@ def getSensorConfig(devid):
 		device = DEVICE.get_item(Key={'devid':devid})
 		if 'Item' in device:
 			sensor_config = device['Item'].get('sensor_config', None)
-			if sensor_config:
-				sensor_config = json.loads(sensor_config)
 			REDIS.set(devid+'_sensor_config', json.dumps(sensor_config))
 	return sensor_config
 
@@ -36,12 +34,12 @@ while True:
 	for message in timeseries.receive_messages(WaitTimeSeconds=10):
 		try:
 			payload = json.loads(message.body)
-			print payload
+			
 			devid = payload.get('devid', None)
 			sensor = int(payload.get('sensor', 0))
 			variables = payload.get('variables', [])
 			timestamp = payload.get('timestamp', 0)
-			print variables
+			
 			sensor_config = getSensorConfig(devid)
 			sensor_config = sensor_config.get(sensor, None)
 			print sensor_config
