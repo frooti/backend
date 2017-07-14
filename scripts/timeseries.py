@@ -47,11 +47,11 @@ while True:
 			if sensor_config and sensor_config['record']:
 				sid = sensor_config['sid']
 				for vid, d in enumerate(variables):
-				if d and sensor_config['variables'][vid]:
-					if sensor_config['variables'][vid]['type'] == 'number':
-						d = float(d)
-						key = devid+'_'+sid+'_'+vid
-						REDIS.ZADD(key, timestamp, d)
+					if d and sensor_config['variables'][vid]:
+						if sensor_config['variables'][vid]['type'] == 'number':
+							d = float(d)
+							key = devid+'_'+sid+'_'+vid
+							REDIS.ZADD(key, timestamp, d)
 
 			message.delete()
 		except Exception, e:
