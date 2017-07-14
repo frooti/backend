@@ -41,10 +41,10 @@ while True:
 			sensor = int(payload.get('sensor', 0))
 			variables = payload.get('variables', [])
 			timestamp = payload.get('timestamp', 0)
-
+			print variables
 			sensor_config = getSensorConfig(devid)
 			sensor_config = sensor_config.get(sensor, None)
-			
+			print sensor_config
 			if sensor_config and sensor_config['record']:
 				sid = sensor_config['sid']
 				for vid, d in enumerate(variables):
