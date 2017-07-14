@@ -17,6 +17,6 @@ REDIS = redis.Redis(host=HOST, port=PORT)
 sqs = boto3.resource('sqs')
 timeseries = sqs.get_queue_by_name(QueueName='timeseries')
 
-for message in queue.receive_messages(WaitTimeSeconds=10):
+for message in timeseries.receive_messages(WaitTimeSeconds=10):
 	print message.body
 	message.delete()
