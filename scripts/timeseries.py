@@ -36,7 +36,7 @@ while True:
 			payload = json.loads(message.body)
 			
 			devid = payload.get('devid', None)
-			sensor = int(payload.get('sensor', 0))
+			sensor = str(payload.get('sensor', 0))
 			variables = payload.get('variables', [])
 			timestamp = payload.get('timestamp', 0)
 			
