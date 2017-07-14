@@ -46,7 +46,7 @@ while True:
 			if sensor_config and sensor_config['record']:
 				sid = sensor_config['sid']
 				for vid, d in enumerate(variables):
-					vid = vid+1
+					vid = str(vid+1)
 					if d and sensor_config['variables'][vid]:
 						if sensor_config['variables'][vid]['type'] == 'number':
 							d = float(d)
