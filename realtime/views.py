@@ -72,7 +72,7 @@ def getDeviceData(devices):
 
 			if q['Responses'].get('device', None):
 				for d in q['Responses']['device']:
-					data.append(p)
+					data.append(d)
 
 	return data
 
