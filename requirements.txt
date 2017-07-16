@@ -7,7 +7,9 @@ Django==1.11.3
 docutils==0.13.1
 futures==3.1.1
 jmespath==0.9.3
+meld3==1.0.2
 pyasn1==0.2.3
+pyserial==3.3
 python-dateutil==2.6.1
 pytz==2017.2
 PyYAML==3.12
@@ -15,3 +17,4 @@ redis==2.10.5
 rsa==3.4.2
 s3transfer==0.1.10
 six==1.10.0
+supervisor==3.3.2
