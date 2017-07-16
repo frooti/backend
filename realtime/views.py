@@ -8,9 +8,17 @@ DEFAULT_RESPONSE = '{"status":false, "msg": "bad request."}'
 
 from django.http import HttpResponse
 import boto3
+import redis
 import json
 import uuid
 import time
+from decimal import Decimal
+
+# utilities
+def default(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError
 
 dynamodb = boto3.resource('dynamodb')
 iot = boto3.client('iot')
@@ -20,6 +28,11 @@ USER = dynamodb.Table('user')
 PROJECT = dynamodb.Table('project')
 DEVICE = dynamodb.Table('device')
 TIMESERIES = dynamodb.Table('timeseries')
+
+# redis
+HOST = 'redis.cntdpk.0001.apse1.cache.amazonaws.com'
+PORT = 6379
+REDIS = redis.Redis(host=HOST, port=PORT)
 
 def logindata(user):
 	data = {}
@@ -108,24 +121,36 @@ def project(request):
 			print e
 			res['status'] = False
 			res['msg'] = 'Someting went wrong.'
-	return HttpResponse(json.dumps(res))
+	return HttpResponse(json.dumps(res, default=default))
 
-def getDeviceStats(devices):
+def getDeviceSummary(devices):
 	data = []
 	if isinstance(devices, list):
-		sessions = []
-		
 		keys = []
+		
 		for d in devices:
 			keys.append({'devid': d})
 
 		if keys:
-			requestItems = {'device': {'Keys': keys, 'ProjectionExpression': 'sid'}}
+			requestItems = {'device': {'Keys': keys}}
 			q = dynamodb.meta.client.batch_get_item(RequestItems=requestItems)
 
 		if q['Responses'].get('device', None):
-			for p in q['Responses']['device']:
-				data.append(p)
+			for d in q['Responses']['device']:
+				data.append(d)
+
+		for device in data:
+			devid = device['devid']
+			sensor_config = device['sensor_config']
+
+			for sensor_no in sensor_config:
+				sid = sensor_config[sensor_no]['sid']
+
+				for vid in sensor_config[sensor_no].get('variables', None):
+					key = devid+'_'+sid+'_'+vid
+					r = REDIS.zrevrange(key, 0, -1)
+					if r:
+						sensor_config[sensor_no]['variables'][vid]['summery'] = r
 	return data
 
 def device(request):
@@ -136,11 +161,12 @@ def device(request):
 		try:
 			res['status'] = True
 			res['msg'] = 'success'
- 			res['data'] = getDeviceStats([devid])[0]
+ 			res['data'] = getDeviceSummary([devid])[0]
 		except Exception, e:
+			print e
 			res['status'] = False
 			res['msg'] = 'Someting went wrong.'
-	return HttpResponse(json.dumps(res))
+	return HttpResponse(json.dumps(res, default=default))
 
 def registerDevice(request):
 	res = json.loads(DEFAULT_RESPONSE)
@@ -204,5 +230,3 @@ def registerDevice(request):
 			res['status'] = False
 			res['msg'] = 'Someting went wrong.'
 	return HttpResponse(json.dumps(res))
-
-
