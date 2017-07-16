@@ -8,7 +8,7 @@ from logging.handlers import RotatingFileHandler
 
 ## CONFIG ##
 DEVID = None
-CHANNEL = 'device/'+DEVID
+CHANNEL = 'device/'+str(DEVID)
 DB = None
 ## CONFIG ##
 
