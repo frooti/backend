@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('sensor'+str(SENSOR))
 
 # create a file handler
-handler = RotatingFileHandler('/var/log/sensor'+str(SENSOR)+'.log', maxBytes=1000000, backupCount=2)
+handler = RotatingFileHandler('sensor'+str(SENSOR)+'.log', maxBytes=1000000, backupCount=2)
 handler.setLevel(logging.INFO)
 
 # create a logging format
