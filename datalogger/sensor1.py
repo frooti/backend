@@ -88,7 +88,7 @@ while True:
 					cursor.execute("INSERT INTO sensor (sensor, timestamp, payload) VALUES ("+str(SENSOR)+", "+str(int(time.time()))+", '"+rdata+"')")
 					DB.commit()
 	except Exception, e:
-		logger.error(traceback.print_exc())
+		logger.error('error', exc_info=True)
 		time.sleep(1)
 
 	## close connections ##
