@@ -1,4 +1,3 @@
-from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTShadowClient
 import sqlite3
 import time
 import serial
@@ -23,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('sensor'+str(SENSOR))
 
 # create a file handler
-handler = logging.RotatingFileHandler('/var/log/sensor'+str(SENSOR)+'.log', maxBytes=1000000, backupCount=2)
+handler = RotatingFileHandler('/var/log/sensor'+str(SENSOR)+'.log', maxBytes=1000000, backupCount=2)
 handler.setLevel(logging.INFO)
 
 # create a logging format
