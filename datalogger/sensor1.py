@@ -6,7 +6,6 @@ import json
 import uuid
 import logging
 from logging.handlers import RotatingFileHandler
-import traceback
 
 ## CONFIG ##
 SERIAL_PORT = '/dev/ttyUSB0'
