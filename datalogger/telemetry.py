@@ -1,6 +1,5 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import sqlite3
-from datetime
 import time
 import json
 import uuid
