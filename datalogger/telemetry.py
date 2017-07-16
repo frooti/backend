@@ -27,15 +27,6 @@ handler.setFormatter(formatter)
 # add the handlers to the logger
 logger.addHandler(handler)
 
-# Telemetry
-MQTT = AWSIoTPythonSDK.MQTTLib.AWSIoTMQTTClient(uuid.uuid4())
-MQTT.configureEndpoint("a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com", 8883)
-MQTT.configureCredentials("certs/root-CA.crt", "certs/private.pem.key", "certs/certificate.pem.crt")
-MQTT.configureOfflinePublishQueueing(100000, AWSIoTPythonSDK.MQTTLib.DROP_OLDEST) # offlne queue
-MQTT.configureDrainingFrequency(25)  # Draining: 25 Hz
-MQTT.configureConnectDisconnectTimeout(10)  # 10 sec
-MQTT.configureMQTTOperationTimeout(5)  # 5 sec
-
 def closeConnections():
 	try:
 		if DB:
@@ -47,7 +38,14 @@ def closeConnections():
 while True:
 	try:
 		if os.path.isfile('certs/root-CA.crt') and os.path.isfile('certs/private.pem.key') and os.path.isfile('certs/certificate.pem.crt'):
-			## mqtt CONNECTION ##
+			## Telemetry ##
+			MQTT = AWSIoTPythonSDK.MQTTLib.AWSIoTMQTTClient(uuid.uuid4())
+			MQTT.configureEndpoint("a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com", 8883)
+			MQTT.configureCredentials("certs/root-CA.crt", "certs/private.pem.key", "certs/certificate.pem.crt")
+			MQTT.configureOfflinePublishQueueing(100000, AWSIoTPythonSDK.MQTTLib.DROP_OLDEST) # offlne queue
+			MQTT.configureDrainingFrequency(25)  # Draining: 25 Hz
+			MQTT.configureConnectDisconnectTimeout(10)  # 10 sec
+			MQTT.configureMQTTOperationTimeout(5)  # 5 sec
 			MQTT.connect()
 
 			## DATABASE CONNECTION ##
