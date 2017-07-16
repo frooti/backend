@@ -1,5 +1,4 @@
 import AWSIoTPythonSDK.MQTTLib
-from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import sqlite3
 import time
 import json
@@ -28,7 +27,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 # Telemetry
-MQTT = AWSIoTMQTTClient(uuid.uuid4())
+MQTT = AWSIoTPythonSDK.MQTTLib.AWSIoTMQTTClient(uuid.uuid4())
 MQTT.configureEndpoint("a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com", 8883)
 MQTT.configureCredentials("certs/root-CA.crt", "certs/private.pem.key", "certs/certificate.pem.crt")
 MQTT.configureOfflinePublishQueueing(100000, AWSIoTPythonSDK.MQTTLib.DROP_OLDEST) # offlne queue
