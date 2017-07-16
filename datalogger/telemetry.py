@@ -30,7 +30,7 @@ logger.addHandler(handler)
 MQTT = AWSIoTMQTTClient(uuid.uuid4())
 MQTT.configureEndpoint("a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com", 8883)
 MQTT.configureCredentials("certs/root-CA.crt", "certs/private.pem.key", "certs/certificate.pem.crt")
-MQTT.configureOfflinePublishQueueing(100000, AWSIoTMQTTClient.DROP_OLDEST) # offlne queue
+MQTT.configureOfflinePublishQueueing(100000, AWSIoTPythonSDK.MQTTLib.DROP_OLDEST) # offlne queue
 MQTT.configureDrainingFrequency(25)  # Draining: 25 Hz
 MQTT.configureConnectDisconnectTimeout(10)  # 10 sec
 MQTT.configureMQTTOperationTimeout(5)  # 5 sec
