@@ -11,7 +11,6 @@ import traceback
 ## CONFIG ##
 SERIAL_PORT = '/dev/ttyUSB0'
 SENSOR = 1
-DEVID = None
 BAUDRATE = None
 REGEX = None
 DB = None
