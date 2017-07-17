@@ -39,6 +39,7 @@ def logindata(user):
 	if user:
 		data['email'] = user.get('email', None)
 		data['organisation'] = user.get('organisation', None)
+		data['projects'] = user.get('projects', [])
 	return data
 
 def login(request):
