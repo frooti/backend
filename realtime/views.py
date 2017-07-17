@@ -34,45 +34,7 @@ HOST = 'redis.cntdpk.0001.apse1.cache.amazonaws.com'
 PORT = 6379
 REDIS = redis.Redis(host=HOST, port=PORT)
 
-def logindata(user):
-	data = {}
-	if user:
-		data['email'] = user.get('email', None)
-		data['organisation'] = user.get('organisation', None)
-		data['projects'] = user.get('projects', [])
-	return data
-
-def login(request):
-	res = json.loads(DEFAULT_RESPONSE)
-	email = request.GET.get('email', None)
-	password = request.GET.get('password', None)
-	
-	if email and password:
-		try:
-			q = USER.get_item(Key={'email':email})
-			user = q.get('Item', None)
-			if user:
-				if password == user.get('password', None):
-					res['status'] = True
-					res['msg'] = 'success'
-					res['data'] = logindata(user)
-				else:
-					res['status'] = False
-					res['msg'] = 'Email/Password is wrong.'
-			else:
-				res['status'] = False
-				res['msg'] = 'Email/Password is wrong.'
-		except Exception, e:
-			print e
-			res['status'] = False
-			res['msg'] = 'Someting went wrong.'
-
-	return HttpResponse(json.dumps(res))
-
-def logout(request):
-	res = json.loads(DEFAULT_RESPONSE)
-	return HttpResponse(json.dumps(res))
-
+## HELPERS ##
 def getDeviceData(devices):
 	data = []
 	if isinstance(devices, list):
@@ -109,21 +71,6 @@ def getProjectData(projects):
 
 	return data
 
-def project(request):
-	res = json.loads(DEFAULT_RESPONSE)
-	pid = request.GET.get('pid', None)
-	
-	if pid:
-		try:
-			res['status'] = True
-			res['msg'] = 'success'
- 			res['data'] = getProjectData([pid])[0]  
-		except Exception, e:
-			print e
-			res['status'] = False
-			res['msg'] = 'Someting went wrong.'
-	return HttpResponse(json.dumps(res, default=default))
-
 def getDeviceSummary(devices):
 	data = []
 	if isinstance(devices, list):
@@ -153,6 +100,62 @@ def getDeviceSummary(devices):
 					if r:
 						sensor_config[sensor_no]['variables'][vid]['summery'] = r
 	return data
+## HELPERS ##
+
+def logindata(user):
+	data = {}
+	if user:
+		data['email'] = user.get('email', None)
+		data['organisation'] = user.get('organisation', None)
+		projects = list(set(user.get('projects', []).get('owner', [])+user.get('projects', []).get('access', [])))
+		data['projects'] = getProjectData(projects)
+	return data
+
+def login(request):
+	res = json.loads(DEFAULT_RESPONSE)
+	email = request.GET.get('email', None)
+	password = request.GET.get('password', None)
+	
+	if email and password:
+		try:
+			q = USER.get_item(Key={'email':email})
+			user = q.get('Item', None)
+			if user:
+				if password == user.get('password', None):
+					res['status'] = True
+					res['msg'] = 'success'
+					res['data'] = logindata(user)
+				else:
+					res['status'] = False
+					res['msg'] = 'Email/Password is wrong.'
+			else:
+				res['status'] = False
+				res['msg'] = 'Email/Password is wrong.'
+		except Exception, e:
+			print e
+			res['status'] = False
+			res['msg'] = 'Someting went wrong.'
+
+	return HttpResponse(json.dumps(res))
+
+def logout(request):
+	res = json.loads(DEFAULT_RESPONSE)
+	return HttpResponse(json.dumps(res))
+
+def project(request):
+	res = json.loads(DEFAULT_RESPONSE)
+	pid = request.GET.get('pid', None)
+	
+	if pid:
+		try:
+			res['status'] = True
+			res['msg'] = 'success'
+ 			res['data'] = getProjectData([pid])[0]  
+		except Exception, e:
+			print e
+			res['status'] = False
+			res['msg'] = 'Someting went wrong.'
+	return HttpResponse(json.dumps(res, default=default))
 
 def device(request):
 	res = json.loads(DEFAULT_RESPONSE)
