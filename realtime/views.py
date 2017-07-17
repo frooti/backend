@@ -100,7 +100,6 @@ def getDeviceSummary(devices):
 					if r:
 						sensor_config[sensor_no]['variables'][vid]['summery'] = r
 	return data
-## HELPERS ##
 
 def logindata(user):
 	data = {}
@@ -110,6 +109,7 @@ def logindata(user):
 		projects = list(set(user.get('projects', []).get('owner', [])+user.get('projects', []).get('access', [])))
 		data['projects'] = getProjectData(projects)
 	return data
+## HELPERS ##
 
 def login(request):
 	res = json.loads(DEFAULT_RESPONSE)
@@ -136,7 +136,7 @@ def login(request):
 			res['status'] = False
 			res['msg'] = 'Someting went wrong.'
 
-	return HttpResponse(json.dumps(res))
+	return HttpResponse(json.dumps(res), default=default)
 
 def logout(request):
 	res = json.loads(DEFAULT_RESPONSE)
@@ -233,4 +233,4 @@ def registerDevice(request):
 			print e
 			res['status'] = False
 			res['msg'] = 'Someting went wrong.'
-	return HttpResponse(json.dumps(res))
+	return HttpResponse(json.dumps(res), default=default)
