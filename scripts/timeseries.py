@@ -1,6 +1,7 @@
 import boto3
 import redis
 import json
+import re
 
 # dynamodb
 dynamodb = boto3.resource('dynamodb')
@@ -37,22 +38,36 @@ while True:
 			
 			devid = payload.get('devid', None)
 			sensor = str(payload.get('sensor', 0))
-			variables = payload.get('variables', [])
+			payload = payload.get('payload', [])
 			timestamp = int(payload.get('timestamp', 0))
 			
 			sensor_config = getSensorConfig(devid)
 			sensor_config = sensor_config.get(sensor, None)
-			print sensor_config
+			
 			if sensor_config and sensor_config['record']:
 				sid = sensor_config['sid']
-				for vid, d in enumerate(variables):
-					vid = str(vid+1)
-					if d and sensor_config['variables'][vid]:
-						if sensor_config['variables'][vid]['type'] == 'number':
-							d = float(d)
-							key = devid+'_'+sid+'_'+vid
-							REDIS.zadd(key, str(d)+'::'+str(timestamp), timestamp)
+				values = []
+				if sensor_config['regex']:
+					match = re.search(re.compile(sensor_config['regex']), payload)
+					if match:
+						values = list(match.groups())
 
+				for vid, value in enumerate(values):
+					vid = str(vid+1)
+					variable_config = sensor_config['variables'][vid]
+					
+					if value and variable_config:
+						if variable_config['type'] == 'number':
+							value = float(value)
+							key = devid+'_'+sid+'_'+vid
+							# redis
+							REDIS.zadd(key, str(value)+'::'+str(timestamp), timestamp)
+							# dynamoDB
+							item = {}
+							item['devid_sid_vid'] = key
+							item['timestamp'] = timestamp
+							item['value'] = value
+							TIMESERIES.put_item(Item=item)
 			message.delete()
 		except Exception, e:
 			print e
