@@ -136,11 +136,11 @@ def login(request):
 			res['status'] = False
 			res['msg'] = 'Someting went wrong.'
 
-	return HttpResponse(json.dumps(res), default=default)
+	return HttpResponse(json.dumps(res, default=default))
 
 def logout(request):
 	res = json.loads(DEFAULT_RESPONSE)
-	return HttpResponse(json.dumps(res))
+	return HttpResponse(json.dumps(res, default=default))
 
 def project(request):
 	res = json.loads(DEFAULT_RESPONSE)
@@ -233,4 +233,4 @@ def registerDevice(request):
 			print e
 			res['status'] = False
 			res['msg'] = 'Someting went wrong.'
-	return HttpResponse(json.dumps(res), default=default)
+	return HttpResponse(json.dumps(res, default=default))
