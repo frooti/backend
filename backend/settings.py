@@ -25,8 +25,8 @@ SECRET_KEY = '4llddur^r!qpi7u$7zrgf%cu#ldy+&*46i$j3n8qet0x)5kp2h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CORS_ORIGIN_WHITELIST = ('localhost')
-ORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = ('localhost',)
+CORS_ALLOW_CREDENTIALS = True
 
 ALLOWED_HOSTS = ['ec2-54-251-161-104.ap-southeast-1.compute.amazonaws.com', '.dataraft.in']
 
