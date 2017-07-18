@@ -25,6 +25,9 @@ SECRET_KEY = '4llddur^r!qpi7u$7zrgf%cu#ldy+&*46i$j3n8qet0x)5kp2h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+CORS_ORIGIN_WHITELIST = ('localhost')
+ORS_ALLOW_CREDENTIALS = True
+
 ALLOWED_HOSTS = ['ec2-54-251-161-104.ap-southeast-1.compute.amazonaws.com', '.dataraft.in']
 
 
@@ -37,11 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
