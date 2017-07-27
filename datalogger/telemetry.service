@@ -4,7 +4,7 @@
 
  [Service]
  Type=idle
- ExecStartPre=/projects/backend/ENV/bin/source activate
+ ExecStartPre=/home/pi/projects/backend/ENV/bin/source activate
  ExecStart=nohup /home/pi/projects/backend/ENV/bin/python /home/pi/projects/backend/datalogger/telemetry.py >> /var/log/telemetry.log 2>&1 &
  Restart=always
 
