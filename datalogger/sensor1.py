@@ -9,7 +9,7 @@ from logging.handlers import RotatingFileHandler
 
 ## CONFIG ##
 SERIAL_PORT = '/dev/ttyUSB0'
-SENSOR = 1
+SENSOR = 's1'
 BAUDRATE = None
 REGEX = None
 DB = None
@@ -60,7 +60,7 @@ while True:
 						## DATABASE CONNECTION ##
 						DB = sqlite3.connect('sensordata.db')
 						cursor = DB.cursor()
-						cursor.execute('CREATE TABLE IF NOT EXISTS sensor (sensor INT NOT NULL, timestamp INT NOT NULL, payload CHAR(500) NOT NULL);')
+						cursor.execute('CREATE TABLE IF NOT EXISTS sensor (sensor CHAR(2) NOT NULL, timestamp INT NOT NULL, payload CHAR(500) NOT NULL);')
 						DB.commit()
 						try:
 							cursor = DB.cursor()
@@ -84,7 +84,7 @@ while True:
 
 						logger.DEBUG(rdata)
 						cursor = DB.cursor()
-						cursor.execute("INSERT INTO sensor (sensor, timestamp, payload) VALUES ("+str(SENSOR)+", "+str(int(time.time()))+", '"+rdata+"')")
+						cursor.execute("INSERT INTO sensor (sensor, timestamp, payload) VALUES ('"+str(SENSOR)+"', "+str(int(time.time()))+", '"+rdata+"')")
 						DB.commit()
 	except Exception, e:
 		logger.error('error', exc_info=True)
