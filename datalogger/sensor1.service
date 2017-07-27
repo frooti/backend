@@ -5,7 +5,7 @@
  [Service]
  Type=idle
  ExecStartPre=/projects/backend/ENV/bin/source activate 
- ExecStart=nohup /projects/backend/ENV/bin /projects/backend/datalogger/sensor1.py >> /var/log/sensor1.log 2>&1 &
+ ExecStart=nohup /projects/backend/ENV/bin/python /projects/backend/datalogger/sensor1.py >> /var/log/sensor1.log 2>&1 &
  Restart=always
 
 [Install]
