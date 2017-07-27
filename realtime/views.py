@@ -50,8 +50,8 @@ def getDeviceInfo(devices):
 				for d in q['Responses']['device']:
 					if d and d.get('location', None):
 						d['location']['properties'] = {}
-						d['location']['properties']['name'] = 'karaikal'
-						d['location']['properties']['dev_name'] = d['name']
+						d['location']['properties']['name'] = d['name']
+						d['location']['properties']['description'] = d['description']
 					data.append(d)
 
 	return data
