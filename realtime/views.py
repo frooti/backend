@@ -52,6 +52,7 @@ def getDeviceInfo(devices):
 						d['location']['properties'] = {}
 						d['location']['properties']['name'] = d['name']
 						d['location']['properties']['description'] = d['description']
+						d['location']['properties']['devid'] = d['devid']
 					data.append(d)
 
 	return data
