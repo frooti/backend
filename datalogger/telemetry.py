@@ -15,6 +15,7 @@ DB = None
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('telemetry')
+logger.propagate = False
 
 # create a file handler
 handler = RotatingFileHandler('/var/log/telemetry.log', maxBytes=1000000, backupCount=2)
