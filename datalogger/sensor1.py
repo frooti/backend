@@ -58,7 +58,7 @@ while True:
 						logger.info('SERIAL CONNECTION OK.')
 						
 						## DATABASE CONNECTION ##
-						DB = sqlite3.connect('sensordata.db')
+						DB = sqlite3.connect('/var/sensordata.db')
 						cursor = DB.cursor()
 						cursor.execute('CREATE TABLE IF NOT EXISTS sensor (sensor CHAR(2) NOT NULL, timestamp INT NOT NULL, payload CHAR(500) NOT NULL);')
 						DB.commit()
