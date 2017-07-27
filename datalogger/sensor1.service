@@ -4,7 +4,6 @@
 
  [Service]
  Type=idle
- ExecStartPre=source /home/pi/projects/backend/ENV/bin/activate 
  ExecStart=/home/pi/projects/backend/ENV/bin/python /home/pi/projects/backend/datalogger/sensor1.py >> /var/log/sensor1.log 2>&1
  Restart=always
 
