@@ -35,7 +35,7 @@ PORT = 6379
 REDIS = redis.Redis(host=HOST, port=PORT)
 
 ## HELPERS ##
-def getDeviceData(devices):
+def getDeviceInfo(devices):
 	data = []
 	if isinstance(devices, list):
 		keys = []
@@ -67,11 +67,11 @@ def getProjectData(projects):
 				for p in q['Responses']['project']:
 					data.append(p)
 			for p in data:
-				p['devices'] = getDeviceData(p.get('devices', []))
+				p['devices'] = getDeviceInfo(p.get('devices', []))
 
 	return data
 
-def getDeviceSummary(devices):
+def getDeviceData(devices):
 	data = []
 	if isinstance(devices, list):
 		keys = []
@@ -98,7 +98,7 @@ def getDeviceSummary(devices):
 					key = devid+'_'+sid+'_'+vid
 					r = REDIS.zrevrange(key, 0, -1)
 					if r:
-						sensor_config[sensor_no]['variables'][vid]['summery'] = r
+						sensor_config[sensor_no]['variables'][vid]['data'] = r
 	return data
 
 def logindata(user):
@@ -165,7 +165,7 @@ def device(request):
 		try:
 			res['status'] = True
 			res['msg'] = 'success'
- 			res['data'] = getDeviceSummary([devid])[0]
+ 			res['data'] = getDeviceData([devid])[0]
 		except Exception, e:
 			print e
 			res['status'] = False
