@@ -38,7 +38,7 @@ while True:
 			
 			devid = payload.get('devid', None)
 			sensor = str(payload.get('sensor', 0))
-			timestamp = int(payload.get('timestamp', 0))
+
 			payload = payload.get('payload', '')
 			if payload:
 				payload = str(payload[0])
@@ -56,7 +56,7 @@ while True:
 						values = list(match.groups())
 
 				for vid, value in enumerate(values):
-					vid = str('v'+vid+str(1))
+					vid = str('v'+str(vid))
 					variable_config = sensor_config['variables'][vid]
 					
 					if value and variable_config:
