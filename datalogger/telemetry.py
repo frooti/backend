@@ -66,11 +66,13 @@ while True:
 				logger.info('DB CONNECTION OK.')
 
 				while True:
-					q = conn.execute('SELECT * FROM sensor ORDER BY timestamp LIMIT 100;')
+					cursor = DB.cursor()
+					cursor.execute('SELECT * FROM sensor ORDER BY timestamp LIMIT 100;')
+					
 					to_timestamp = 0 # epoch
 					from_timestamp = int(time.time())+315360000
 					
-					for r in q:
+					for r in cursor.fetchall():
 						if r[1] > to_timestamp:
 							to_timestamp = r[1]
 						if from_timestamp > r[1]:
