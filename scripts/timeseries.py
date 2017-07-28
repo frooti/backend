@@ -34,7 +34,7 @@ def getSensorConfig(devid):
 while True:
 	for message in timeseries.receive_messages(WaitTimeSeconds=10):
 		try:
-			payload = json.loads(message.body)
+			payload = json.loads(message.body)[0]
 			
 			devid = payload.get('devid', None)
 			sensor = str(payload.get('sensor', 0))
