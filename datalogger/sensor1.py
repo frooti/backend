@@ -81,8 +81,8 @@ while True:
 							match = re.search(r, data)
 							if match:
 								rdata = list(match.groups())
-								rdata = json.dumps(rdata)
-
+						
+						rdata = json.dumps(rdata)
 						logger.debug(rdata)
 						cursor = DB.cursor()
 						cursor.execute("INSERT INTO sensor (sensor, timestamp, payload) VALUES ('"+str(SENSOR)+"', "+str(int(time.time()))+", '"+rdata+"')")
