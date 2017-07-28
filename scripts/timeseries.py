@@ -56,7 +56,7 @@ while True:
 						values = list(match.groups())
 
 				for vid, value in enumerate(values):
-					vid = str('v'+str(vid))
+					vid = str('v'+str(vid+1))
 					variable_config = sensor_config['variables'][vid]
 					
 					if value and variable_config:
