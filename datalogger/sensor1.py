@@ -16,13 +16,13 @@ DB = None
 SER = None
 ## CONFIG ##
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('sensor'+str(SENSOR))
 logger.propagate = False
 
 # create a file handler
 handler = RotatingFileHandler('/var/log/sensor'+str(SENSOR)+'.log', maxBytes=1000000, backupCount=2)
-handler.setLevel(logging.INFO)
+handler.setLevel(logging.DEBUG)
 
 # create a logging format
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -88,7 +88,7 @@ while True:
 						cursor.execute("INSERT INTO sensor (sensor, timestamp, payload) VALUES ('"+str(SENSOR)+"', "+str(int(time.time()))+", '"+rdata+"')")
 						DB.commit()
 		else:
-			logger.info('NO BAUDRATE.')
+			logger.DEBUG('NO BAUDRATE.')
 			time.sleep(1)
 	except Exception, e:
 		logger.error('error', exc_info=True)
