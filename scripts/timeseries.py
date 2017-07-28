@@ -34,11 +34,13 @@ def getSensorConfig(devid):
 while True:
 	for message in timeseries.receive_messages(WaitTimeSeconds=10):
 		try:
-			payload = json.loads(message.body)[0]
+			payload = json.loads(message.body)
 			
 			devid = payload.get('devid', None)
 			sensor = str(payload.get('sensor', 0))
-			payload = payload.get('payload', [])
+			payload = payload.get('payload', '')
+			if payload:
+				payload = payload[0]
 			timestamp = int(payload.get('timestamp', 0))
 			
 			sensor_config = getSensorConfig(devid)
