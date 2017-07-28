@@ -2,6 +2,7 @@ import boto3
 import redis
 import json
 import re
+from decimal import Decimal
 
 # dynamodb
 dynamodb = boto3.resource('dynamodb')
@@ -69,7 +70,7 @@ while True:
 							item = {}
 							item['devid_sid_vid'] = key
 							item['timestamp'] = timestamp
-							item['value'] = value
+							item['value'] = Decimal(value)
 							TIMESERIES.put_item(Item=item)
 			message.delete()
 		except Exception, e:
