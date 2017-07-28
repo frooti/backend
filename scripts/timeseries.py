@@ -40,7 +40,7 @@ while True:
 			sensor = str(payload.get('sensor', 0))
 			payload = payload.get('payload', '')
 			if payload:
-				payload = payload[0]
+				payload = str(payload[0])
 			timestamp = int(payload.get('timestamp', 0))
 			
 			sensor_config = getSensorConfig(devid)
