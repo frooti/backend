@@ -9,6 +9,7 @@ from logging.handlers import RotatingFileHandler
 
 ## CONFIG ##
 DEVID = None
+ROOT = '/home/pi/projects/backend/'
 CHANNEL = 'device/'+str(DEVID)
 DB = None
 ## CONFIG ##
@@ -38,11 +39,11 @@ def closeConnections():
 
 while True:
 	try:
-		if os.path.isfile('certs/root-CA.crt') and os.path.isfile('certs/private.pem.key') and os.path.isfile('certs/certificate.pem.crt'):
+		if os.path.isfile(ROOT+'datalogger/certs/root-CA.crt') and os.path.isfile(ROOT+'datalogger/certs/private.pem.key') and os.path.isfile(ROOT+'datalogger/certs/certificate.pem.crt'):
 			## Telemetry ##
 			MQTT = AWSIoTPythonSDK.MQTTLib.AWSIoTMQTTClient(uuid.uuid4())
 			MQTT.configureEndpoint("a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com", 8883)
-			MQTT.configureCredentials("certs/root-CA.crt", "certs/private.pem.key", "certs/certificate.pem.crt")
+			MQTT.configureCredentials(ROOT+"datalogger/certs/root-CA.crt", ROOT+"datalogger/certs/private.pem.key", ROOT+"datalogger/certs/certificate.pem.crt")
 			MQTT.configureOfflinePublishQueueing(100000, AWSIoTPythonSDK.MQTTLib.DROP_OLDEST) # offlne queue
 			MQTT.configureDrainingFrequency(25)  # Draining: 25 Hz
 			MQTT.configureConnectDisconnectTimeout(10)  # 10 sec
