@@ -87,6 +87,9 @@ while True:
 						cursor = DB.cursor()
 						cursor.execute("INSERT INTO sensor (sensor, timestamp, payload) VALUES ('"+str(SENSOR)+"', "+str(int(time.time()))+", '"+rdata+"')")
 						DB.commit()
+		else:
+			logger.info('NO BAUDRATE.')
+			time.sleep(1)
 	except Exception, e:
 		logger.error('error', exc_info=True)
 		time.sleep(1)
