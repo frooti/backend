@@ -13,13 +13,13 @@ CHANNEL = 'device/'+str(DEVID)
 DB = None
 ## CONFIG ##
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('telemetry')
 logger.propagate = False
 
 # create a file handler
 handler = RotatingFileHandler('/var/log/telemetry.log', maxBytes=1000000, backupCount=2)
-handler.setLevel(logging.INFO)
+handler.setLevel(logging.DEBUG)
 
 # create a logging format
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -80,11 +80,15 @@ while True:
 						'payload': json.loads(r[2])
 					}
 					MQTT.publish(CHANNEL, json.dumps(payload), 1)
+					logger.debug(json.dumps(payload))
 
 				if to_timestamp and from_timestamp:
 					cursor = DB.cursor()
 					cursor.execute('DELETE FROM sensor WHERE timestamp>='+str(from_timestamp)+'AND timestamp<='+str(to_timestamp)+';')
 					DB.commit()
+		else:
+			logger.debug('NO CERTIFICATES.')
+			time.sleep(1)
 	except Exception,e:
 		logger.error('error', exc_info=True)
 		time.sleep(1)
