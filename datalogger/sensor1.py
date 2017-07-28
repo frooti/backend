@@ -43,7 +43,7 @@ def closeConnections():
 ## SENSOR CONNECTION ##
 while True:
 	try:
-		if DEVID and BAUDRATE:
+		if BAUDRATE:
 			with serial.Serial() as SER:
 				SER.port = SERIAL_PORT
 				SER.baudrate = BAUDRATE
