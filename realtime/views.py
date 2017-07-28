@@ -104,6 +104,7 @@ def getDeviceData(devices):
 					r = REDIS.zrevrange(key, 0, -1)
 					if r:
 						sensor_config[sensor_no]['variables'][vid]['data'] = r
+						sensor_config[sensor_no]['variables'][vid]['live_url'] = 'a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com/device/'+devid
 	return data
 
 def logindata(user):
