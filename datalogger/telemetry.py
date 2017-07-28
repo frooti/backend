@@ -89,7 +89,7 @@ while True:
 
 					if to_timestamp and from_timestamp:
 						cursor = DB.cursor()
-						cursor.execute('DELETE FROM sensor WHERE timestamp>='+str(from_timestamp)+'AND timestamp<='+str(to_timestamp)+';')
+						cursor.execute('DELETE FROM sensor WHERE timestamp>='+str(from_timestamp)+' AND timestamp<='+str(to_timestamp)+';')
 						DB.commit()
 			else:
 				logger.debug('NO DEVID.')
