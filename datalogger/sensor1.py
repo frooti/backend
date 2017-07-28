@@ -83,7 +83,7 @@ while True:
 								rdata = list(match.groups())
 								rdata = json.dumps(rdata)
 
-						logger.DEBUG(rdata)
+						logger.debug(rdata)
 						cursor = DB.cursor()
 						cursor.execute("INSERT INTO sensor (sensor, timestamp, payload) VALUES ('"+str(SENSOR)+"', "+str(int(time.time()))+", '"+rdata+"')")
 						DB.commit()
