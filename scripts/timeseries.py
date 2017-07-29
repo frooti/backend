@@ -10,7 +10,8 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('timeseries')
 logger.propagate = False
 
-logging.getLogger('boto').setLevel(logging.INFO)
+logging.getLogger('botocore').setLevel(logging.CRITICAL)
+logging.getLogger('boto3').setLevel(logging.CRITICAL))
 
 # create a file handler
 handler = RotatingFileHandler('/var/log/backend/timeseries.log', maxBytes=10000000, backupCount=2)
