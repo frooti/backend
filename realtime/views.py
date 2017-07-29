@@ -105,6 +105,9 @@ def getDeviceData(devices):
 					if r:
 						sensor_config[sensor_no]['variables'][vid]['data'] = r
 						sensor_config[sensor_no]['variables'][vid]['live_url'] = 'a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com/device/'+devid
+					else:
+						sensor_config[sensor_no]['variables'][vid]['data'] = []
+						sensor_config[sensor_no]['variables'][vid]['live_url'] = None
 	return data
 
 def logindata(user):
