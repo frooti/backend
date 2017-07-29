@@ -79,7 +79,7 @@ while True:
 					
 					if value and variable_config:
 						if variable_config['type'] == 'number':
-							value = float(value)
+							value = Decimal(value)
 							key = devid+'_'+sid+'_'+vid
 							# redis
 							REDIS.zadd(key, str(value)+'::'+str(timestamp), timestamp)
@@ -87,7 +87,7 @@ while True:
 							item = {}
 							item['devid_sid_vid'] = key
 							item['timestamp'] = timestamp
-							item['value'] = Decimal(value)
+							item['value'] = value
 							TIMESERIES.put_item(Item=item)
 							logger.debug(json.dumps(item))
 			message.delete()
