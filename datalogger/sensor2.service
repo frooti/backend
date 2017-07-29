@@ -4,7 +4,7 @@
 
  [Service]
  Type=idle
- ExecStart=/home/pi/projects/backend/ENV/bin/python /home/pi/projects/backend/datalogger/sensor1.py
+ ExecStart=/home/pi/projects/backend/ENV/bin/python /home/pi/projects/backend/datalogger/sensor2.py
  Restart=always
 
 [Install]
