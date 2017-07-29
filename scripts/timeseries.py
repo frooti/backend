@@ -3,6 +3,23 @@ import redis
 import json
 import re
 from decimal import Decimal
+import logging
+from logging.handlers import RotatingFileHandler
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('timeseries')
+logger.propagate = False
+
+# create a file handler
+handler = RotatingFileHandler('/var/log/timeseries.log', maxBytes=10000000, backupCount=2)
+handler.setLevel(logging.DEBUG)
+
+# create a logging format
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+
+# add the handlers to the logger
+logger.addHandler(handler)
 
 # dynamodb
 dynamodb = boto3.resource('dynamodb')
@@ -33,8 +50,8 @@ def getSensorConfig(devid):
 
 
 while True:
-	for message in timeseries.receive_messages(WaitTimeSeconds=10):
-		try:
+	try:
+		for message in timeseries.receive_messages(WaitTimeSeconds=10):
 			payload = json.loads(message.body)
 			
 			devid = payload.get('devid', None)
@@ -72,6 +89,7 @@ while True:
 							item['timestamp'] = timestamp
 							item['value'] = Decimal(value)
 							TIMESERIES.put_item(Item=item)
+							logger.debug(json.dumps(item))
 			message.delete()
-		except Exception, e:
-			print e
+	except Exception, e:
+		logger.error('error', exc_info=True)
