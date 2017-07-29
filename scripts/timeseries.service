@@ -4,7 +4,7 @@
 
  [Service]
  Type=idle
- ExecStart=/home/ubuntu/projects/backend/ENV/bin/python /home/ubuntu/projects/backend/scripts/timeseries.py >> /var/log/timeseries.log 2>&1
+ ExecStart=/home/ubuntu/projects/backend/ENV/bin/python /home/ubuntu/projects/backend/scripts/timeseries.py
  Restart=always
 
 [Install]
