@@ -2,6 +2,25 @@ import usb.core
 import time
 import requests
 import os
+import logging
+from logging.handlers import RotatingFileHandler
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('network')
+logger.propagate = False
+
+# create a file handler
+handler = RotatingFileHandler('/var/log/network.log', maxBytes=10000000, backupCount=2)
+handler.setLevel(logging.DEBUG)
+
+# create a logging format
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+
+# add the handlers to the logger
+logger.addHandler(handler)
+
+
 
 PING_URL = 'http://www.google.com'
 
@@ -11,7 +30,7 @@ dev_modem = usb.core.find(idVendor=0x12d1, idProduct=0x1506)
 
 try: # network ok
 	r = requests.head(PING_URL)
-	print 'network ok'
+	logger.info('network ok.')
 except Exception, e: # reconnect
 	os.system('pkill network.py')
 
@@ -20,7 +39,7 @@ except Exception, e: # reconnect
 		dev_stick.reset()
 	elif dev_modem:
 		dev_modem.reset()
-	print 'usb reset.'
+	logger.info('usb reset.')
 	time.sleep(3)
 
 	# modem mode
@@ -29,7 +48,7 @@ except Exception, e: # reconnect
 	os.system('usb_modeswitch -c /etc/usb_modeswitch.conf')
 	time.sleep(1)
 	os.system('usb_modeswitch -c /etc/usb_modeswitch.conf')
-	print 'modem mode.'
+	logger.info('modem mode.')
 	
 	os.system('pkill pppd')
 
@@ -37,4 +56,4 @@ except Exception, e: # reconnect
 
 	# dial up
 	os.system('wvdial a &')
-	print 'dialup.'
+	logger.info('dailed up.')
