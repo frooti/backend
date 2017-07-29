@@ -104,10 +104,10 @@ def getDeviceData(devices):
 					r = REDIS.zrevrange(key, 0, -1)
 					if r:
 						sensor_config[sensor_no]['variables'][vid]['data'] = r
-						sensor_config[sensor_no]['variables'][vid]['live_url'] = 'a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com/device/'+devid
+						sensor_config[sensor_no]['variables'][vid]['mqtt'] = {'endpoint': 'a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com/', 'topic': 'device/'+devid}
 					else:
 						sensor_config[sensor_no]['variables'][vid]['data'] = []
-						sensor_config[sensor_no]['variables'][vid]['live_url'] = None
+						sensor_config[sensor_no]['variables'][vid]['mqtt'] = {}
 	return data
 
 def logindata(user):
