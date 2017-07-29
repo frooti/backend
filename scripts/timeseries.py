@@ -48,6 +48,12 @@ def getSensorConfig(devid):
 			REDIS.set(devid+'_sensor_config', json.dumps(sensor_config))
 	return sensor_config
 
+# utilities
+def default(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError
+
 
 while True:
 	try:
@@ -89,7 +95,7 @@ while True:
 							item['timestamp'] = timestamp
 							item['value'] = value
 							TIMESERIES.put_item(Item=item)
-							logger.debug(json.dumps(item))
+							logger.debug(json.dumps(item, default=default))
 			message.delete()
 	except Exception, e:
 		logger.error('error', exc_info=True)
