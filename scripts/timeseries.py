@@ -11,7 +11,7 @@ logger = logging.getLogger('timeseries')
 logger.propagate = False
 
 # create a file handler
-handler = RotatingFileHandler('/var/log/timeseries.log', maxBytes=10000000, backupCount=2)
+handler = RotatingFileHandler('/var/log/backend/timeseries.log', maxBytes=10000000, backupCount=2)
 handler.setLevel(logging.DEBUG)
 
 # create a logging format
