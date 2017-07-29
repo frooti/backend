@@ -8,7 +8,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 ## CONFIG ##
-SERIAL_PORT = '/dev/ttyUSB1'
+SERIAL_PORT = '/dev/sensor2'
 SENSOR = 's2'
 BAUDRATE = None
 REGEX = None
