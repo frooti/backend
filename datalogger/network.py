@@ -2,6 +2,8 @@ import usb.core
 import time
 import requests
 import os
+os.environ["PATH"] += os.pathsep + '/usr/sbin'
+logger.info(os.environ["PATH"])
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -43,17 +45,17 @@ except Exception, e: # reconnect
 	time.sleep(3)
 
 	# modem mode
-	os.system('/bin/bash -c "usb_modeswitch -c /etc/usb_modeswitch.conf"')
+	os.system('usb_modeswitch -c /etc/usb_modeswitch.conf')
 	time.sleep(1)
-	os.system('/bin/bash -c "usb_modeswitch -c /etc/usb_modeswitch.conf"')
+	os.system('usb_modeswitch -c /etc/usb_modeswitch.conf')
 	time.sleep(1)
-	os.system('/bin/bash -c "usb_modeswitch -c /etc/usb_modeswitch.conf"')
+	os.system('usb_modeswitch -c /etc/usb_modeswitch.conf')
 	logger.info('modem mode.')
 	
-	os.system('/bin/bash -c "pkill pppd"')
+	os.system('pkill pppd')
 
 	time.sleep(3)
 
 	# dial up
-	os.system('/bin/bash -c "nohup wvdial a &"')
+	os.system('nohup wvdial a &')
 	logger.info('dailed up.')
