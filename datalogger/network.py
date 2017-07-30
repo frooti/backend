@@ -32,7 +32,7 @@ try: # network ok
 	r = requests.head(PING_URL)
 	logger.info('network ok.')
 except Exception, e: # reconnect
-	os.system('pkill network.py')
+	#os.system('pkill network.py')
 
 	# reset usb
 	if dev_stick:
@@ -43,17 +43,17 @@ except Exception, e: # reconnect
 	time.sleep(3)
 
 	# modem mode
-	os.system('usb_modeswitch -c /etc/usb_modeswitch.conf')
+	os.system('/bin/bash usb_modeswitch -c /etc/usb_modeswitch.conf')
 	time.sleep(1)
-	os.system('usb_modeswitch -c /etc/usb_modeswitch.conf')
+	os.system('/bin/bash usb_modeswitch -c /etc/usb_modeswitch.conf')
 	time.sleep(1)
-	os.system('usb_modeswitch -c /etc/usb_modeswitch.conf')
+	os.system('/bin/bash usb_modeswitch -c /etc/usb_modeswitch.conf')
 	logger.info('modem mode.')
 	
-	os.system('pkill pppd')
+	os.system('/bin/bash pkill pppd')
 
 	time.sleep(3)
 
 	# dial up
-	os.system('wvdial a &')
+	os.system('/bin/bash nohup wvdial a &')
 	logger.info('dailed up.')
