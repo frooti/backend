@@ -43,17 +43,17 @@ except Exception, e: # reconnect
 	time.sleep(3)
 
 	# modem mode
-	os.system('/bin/bash usb_modeswitch -c /etc/usb_modeswitch.conf')
+	os.system('/bin/bash -c "usb_modeswitch -c /etc/usb_modeswitch.conf"')
 	time.sleep(1)
-	os.system('/bin/bash usb_modeswitch -c /etc/usb_modeswitch.conf')
+	os.system('/bin/bash -c "usb_modeswitch -c /etc/usb_modeswitch.conf"')
 	time.sleep(1)
-	os.system('/bin/bash usb_modeswitch -c /etc/usb_modeswitch.conf')
+	os.system('/bin/bash -c "usb_modeswitch -c /etc/usb_modeswitch.conf"')
 	logger.info('modem mode.')
 	
-	os.system('/bin/bash pkill pppd')
+	os.system('/bin/bash -c "pkill pppd"')
 
 	time.sleep(3)
 
 	# dial up
-	os.system('/bin/bash nohup wvdial a &')
+	os.system('/bin/bash -c "nohup wvdial a &"')
 	logger.info('dailed up.')
