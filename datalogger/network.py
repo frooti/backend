@@ -36,12 +36,12 @@ except Exception, e: # reconnect
 	#os.system('pkill network.py')
 
 	# reset usb
-	if dev_stick:
-		dev_stick.reset()
-	elif dev_modem:
-		dev_modem.reset()
-	logger.info('usb reset.')
-	time.sleep(3)
+	# if dev_stick:
+	# 	dev_stick.reset()
+	# elif dev_modem:
+	# 	dev_modem.reset()
+	# logger.info('usb reset.')
+	# time.sleep(3)
 
 	# modem mode
 	os.system('usb_modeswitch -c /etc/usb_modeswitch.conf')
