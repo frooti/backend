@@ -3,7 +3,6 @@ import time
 import requests
 import os
 os.environ["PATH"] += os.pathsep + '/usr/sbin'
-logger.info(os.environ["PATH"])
 import logging
 from logging.handlers import RotatingFileHandler
 
