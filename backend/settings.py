@@ -29,7 +29,7 @@ DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-ALLOWED_HOSTS = ['ec2-54-251-161-104.ap-southeast-1.compute.amazonaws.com', '.dataraft.in']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
