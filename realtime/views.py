@@ -95,7 +95,7 @@ def getDeviceData(devices):
 		for device in data:
 			devid = device['devid']
 			device['mqtt'] = {'endpoint': 'a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com/', 'topic': 'device/'+devid}
-			sensor_config = device['sensor_config']
+			sensor_config = device.get('sensor_config', {})
 
 			for sensor_no in sensor_config:
 				sid = sensor_config[sensor_no]['sid']
