@@ -63,42 +63,46 @@ while True:
 		for message in timeseries.receive_messages(WaitTimeSeconds=10):
 			payload = json.loads(message.body)
 			
-			devid = payload.get('devid', None)
-			sensor = str(payload.get('sensor', 0))
-			timestamp = int(payload.get('timestamp', 0))
-			payload = payload.get('payload', '')
-			if payload:
-				payload = str(payload[0])
-			
-			
-			sensor_config = getSensorConfig(devid)
-			sensor_config = sensor_config.get(sensor, None)
-			
-			if sensor_config and sensor_config['record']:
-				sid = sensor_config['sid']
-				values = []
-				if sensor_config['regex']:
-					match = re.search(re.compile(sensor_config['regex']), payload)
-					if match:
-						values = list(match.groups())
+			try:
+				devid = payload.get('devid', None)
+				sensor = str(payload.get('sensor', 0))
+				timestamp = int(payload.get('timestamp', 0))
+				payload = payload.get('payload', '')
+				if payload:
+					payload = str(payload[0])
+				
+				
+				sensor_config = getSensorConfig(devid)
+				sensor_config = sensor_config.get(sensor, None)
+				
+				if sensor_config and sensor_config['record']:
+					sid = sensor_config['sid']
+					values = []
+					if sensor_config['regex']:
+						match = re.search(re.compile(sensor_config['regex']), payload)
+						if match:
+							values = list(match.groups())
 
-				for vid, value in enumerate(values):
-					vid = str('v'+str(vid+1))
-					variable_config = sensor_config['variables'][vid]
-					
-					if value and variable_config:
-						if variable_config['type'] == 'number':
-							value = Decimal(value)
-							key = devid+'_'+sid+'_'+vid
-							# redis
-							REDIS.zadd(key, str(value)+'::'+str(timestamp), timestamp)
-							# dynamoDB
-							item = {}
-							item['devid_sid_vid'] = key
-							item['timestamp'] = timestamp
-							item['value'] = value
-							TIMESERIES.put_item(Item=item)
-							logger.debug(json.dumps(item, default=default))
+					for vid, value in enumerate(values):
+						vid = str('v'+str(vid+1))
+						variable_config = sensor_config['variables'][vid]
+						
+						if value and variable_config:
+							if variable_config['type'] == 'number':
+								value = Decimal(value)
+								key = devid+'_'+sid+'_'+vid
+								# redis
+								REDIS.zadd(key, str(value)+'::'+str(timestamp), timestamp)
+								# dynamoDB
+								item = {}
+								item['devid_sid_vid'] = key
+								item['timestamp'] = timestamp
+								item['value'] = value
+								TIMESERIES.put_item(Item=item)
+								logger.debug(json.dumps(item, default=default))
+			except Exception, e:
+				logger.error('error', exc_info=True)
+
 			message.delete()
 	except Exception, e:
 		logger.error('error', exc_info=True)
