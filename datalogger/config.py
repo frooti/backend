@@ -119,11 +119,17 @@ while True:
 				logger.info('MQTT CONNECTION OK.')
 
 				DeviceShadow = MQTT.createShadowHandlerWithName("device", True)
+				
 				# Update Shadow
 				loadSettings()
 				DeviceShadow.shadowUpdate(json.dumps(SETTINGS), shadowUpdate, 5)
+				time.sleep(2)
+				
 				# Delta Callback
-				DeviceShadow.shadowRegisterDeltaCallback(shadowDelta)
+				#DeviceShadow.shadowRegisterDeltaCallback(shadowDelta)
+
+				while True:
+					time.sleep(1)
 
 			else:
 				logger.debug('NO DEVID.')
