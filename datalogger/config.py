@@ -96,8 +96,8 @@ def deviceConfig(delta):
 def restartServices():
 	pass
 
-def shadowDelta(msg):
-	logger.info('msg\n'+str(msg))
+def shadowDelta(payload, responseStatus, token):
+	logger.info(payload)
 
 def shadowUpdate(payload, responseStatus, token):
 	print payload
