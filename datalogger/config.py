@@ -48,11 +48,11 @@ def deviceConfig(settings):
 			if not isinstance(xonxoff, bool):
 				raise Exception('Invalid xonxoff')
 	except Exception, e:
-		print e
 		return False
 
 	f = open('config.json', 'w+')
 	f.write(json.dumps(settings))
 	return True
+
 
 
