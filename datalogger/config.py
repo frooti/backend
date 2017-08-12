@@ -8,7 +8,7 @@ SETTINGS = {
 	"sensor": {
 		"s1": {
 			"BAUDRATE": None,
-			"BYTESIZE": serial.BYTESIZE,
+			"BYTESIZE": serial.EIGHTBITS,
 			"PARITY": serial.PARITY_NONE,
 			"STOPBITS": serial.STOPBITS_ZERO,
 			"XONXOFF": False
