@@ -102,7 +102,7 @@ while True:
 	try:
 		if os.path.isfile(ROOT+'datalogger/certs/root-CA.crt') and os.path.isfile(ROOT+'datalogger/certs/private.pem.key') and os.path.isfile(ROOT+'datalogger/certs/certificate.pem.crt'):
 			if DEVID:
-				MQTT = AWSIoTPythonSDK.MQTTLib.AWSIoTMQTTShadowClient(DEVID)
+				MQTT = AWSIoTPythonSDK.MQTTLib.AWSIoTMQTTShadowClient(DEVID+'_shadow')
 				MQTT.configureEndpoint("a28c009dzez6uk.iot.ap-southeast-1.amazonaws.com", 8883)
 				MQTT.configureCredentials(ROOT+"datalogger/certs/root-CA.crt", ROOT+"datalogger/certs/private.pem.key", ROOT+"datalogger/certs/certificate.pem.crt")
 				MQTT.connect()
