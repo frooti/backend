@@ -1,5 +1,6 @@
 import AWSIoTPythonSDK.MQTTLib
 import time
+import os
 import serial
 import json
 import logging
