@@ -23,6 +23,7 @@ logger.addHandler(handler)
 
 ## CONFIG ##
 DEVID = None
+ROOT = '/home/pi/projects/backend/'
 ## CONFIG ##
 
 
