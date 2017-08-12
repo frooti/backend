@@ -98,6 +98,9 @@ def restartServices():
 def shadowDelta(msg):
 	logger.info('msg\n'+str(msg))
 
+def shadowUpdate(srcJSONPayload, srcCallback, srcTimeout):
+	pass
+
 while True:
 	try:
 		if os.path.isfile(ROOT+'datalogger/certs/root-CA.crt') and os.path.isfile(ROOT+'datalogger/certs/private.pem.key') and os.path.isfile(ROOT+'datalogger/certs/certificate.pem.crt'):
@@ -111,7 +114,7 @@ while True:
 				DeviceShadow = MQTT.createShadowHandlerWithName("device", True)
 				# Update Shadow
 				loadSettings()
-				DeviceShadow.shadowUpdate(json.dumps(SETTINGS), None, 5)
+				DeviceShadow.shadowUpdate(json.dumps(SETTINGS), shadowUpdate, 5)
 				# Delta Callback
 				DeviceShadow.shadowRegisterDeltaCallback(shadowDelta)
 
