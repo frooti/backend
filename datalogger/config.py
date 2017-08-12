@@ -122,11 +122,16 @@ while True:
 				
 				# Update Shadow
 				loadSettings()
-				DeviceShadow.shadowUpdate(json.dumps(SETTINGS), shadowUpdate, 5)
+				# state
+				payload = {}
+				payload['state'] = {}
+				payload['state']['reported'] = SETTINGS
+
+				DeviceShadow.shadowUpdate(json.dumps(payload), shadowUpdate, 5)
 				time.sleep(2)
 				
 				# Delta Callback
-				#DeviceShadow.shadowRegisterDeltaCallback(shadowDelta)
+				DeviceShadow.shadowRegisterDeltaCallback(shadowDelta)
 
 				while True:
 					time.sleep(1)
