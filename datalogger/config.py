@@ -99,8 +99,8 @@ def restartServices():
 def shadowDelta(msg):
 	logger.info('msg\n'+str(msg))
 
-def shadowUpdate(srcJSONPayload, srcCallback, srcTimeout):
-	pass
+def shadowUpdate(payload, responseStatus, token):
+	print payload
 
 def closeConnections():
 	try:
