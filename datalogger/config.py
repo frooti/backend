@@ -10,7 +10,7 @@ SETTINGS = {
 			"BAUDRATE": None,
 			"BYTESIZE": serial.EIGHTBITS,
 			"PARITY": serial.PARITY_NONE,
-			"STOPBITS": serial.STOPBITS_ZERO,
+			"STOPBITS": serial.STOPBITS_ONE,
 			"XONXOFF": False
 		},
 	}
