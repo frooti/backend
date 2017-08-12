@@ -118,7 +118,7 @@ while True:
 				MQTT.connect()
 				logger.info('MQTT CONNECTION OK.')
 
-				DeviceShadow = MQTT.createShadowHandlerWithName("device", True)
+				DeviceShadow = MQTT.createShadowHandlerWithName(DEVID, True)
 				
 				# Update Shadow
 				loadSettings()
