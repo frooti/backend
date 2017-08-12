@@ -24,6 +24,7 @@ logger.addHandler(handler)
 ## CONFIG ##
 DEVID = None
 ROOT = '/home/pi/projects/backend/'
+MQTT = None
 ## CONFIG ##
 
 
@@ -101,6 +102,12 @@ def shadowDelta(msg):
 def shadowUpdate(srcJSONPayload, srcCallback, srcTimeout):
 	pass
 
+def closeConnections():
+	try:
+		MQTT.disconnect()
+	except:
+		pass
+
 while True:
 	try:
 		if os.path.isfile(ROOT+'datalogger/certs/root-CA.crt') and os.path.isfile(ROOT+'datalogger/certs/private.pem.key') and os.path.isfile(ROOT+'datalogger/certs/certificate.pem.crt'):
@@ -129,3 +136,4 @@ while True:
 		logger.error('error', exc_info=True)
 		time.sleep(1)
 
+	closeConnections()
