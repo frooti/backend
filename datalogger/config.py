@@ -35,7 +35,7 @@ def str2bool(v):
 SETTINGS = {
 	"sensor": {
 		"s1": {
-			"BAUDRATE": None,
+			"BAUDRATE": 0,
 			"BYTESIZE": serial.EIGHTBITS,
 			"PARITY": serial.PARITY_NONE,
 			"STOPBITS": serial.STOPBITS_ONE,
@@ -100,7 +100,8 @@ def restartServices():
 def shadowDelta(payload, responseStatus, token):
 	logger.info(payload)
 	try:
-		status = deviceConfig(payload['state'])
+		delta = json.loads(payload['state'])
+		status = deviceConfig(delta)
 		if status:
 			# report state
 			payload = {}
