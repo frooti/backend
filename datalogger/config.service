@@ -1,0 +1,11 @@
+[Unit]
+ Description=config
+ After=multi-user.target
+
+ [Service]
+ Type=idle
+ ExecStart=/home/pi/projects/backend/ENV/bin/python /home/pi/projects/backend/datalogger/config.py
+ Restart=always
+
+[Install]
+ WantedBy=multi-user.target
