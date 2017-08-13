@@ -100,7 +100,8 @@ def restartServices():
 def shadowDelta(payload, responseStatus, token):
 	logger.info(payload)
 	try:
-		delta = json.loads(payload['state'])
+		delta = json.loads(payload)
+		delta = delta['state']
 		status = deviceConfig(delta)
 		if status:
 			# report state
