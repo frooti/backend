@@ -123,7 +123,7 @@ def shadowGet(payload, responseStatus, token):
 			payload = json.loads(payload)
 			delta = payload['state'].get('delta', {})
 			if delta:
-				shadowDelta(json.dumps({'state': delta, 'responseStatus':'accepted', 'token':None}))
+				shadowDelta(json.dumps({'state': delta}), 'accepted', None)
 	except:
 		logger.error('error', exc_info=True)
 	
