@@ -146,6 +146,10 @@ while True:
 				DEVICE_SHADOW = MQTT.createShadowHandlerWithName(DEVID, True)
 				
 				# Update Shadow
+				loadSettings()
+				payload = {}
+				payload['state'] = {}
+				payload['state']['reported'] = SETTINGS
 				DEVICE_SHADOW.shadowUpdate(json.dumps(payload), shadowUpdate, 5)
 				time.sleep(2)
 
