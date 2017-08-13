@@ -11,7 +11,7 @@ logger = logging.getLogger('config')
 logger.propagate = False
 
 # create a file handler
-handler = RotatingFileHandler('/var/log/config.log', maxBytes=1000000, backupCount=2)
+handler = RotatingFileHandler('/var/log/backend/config.log', maxBytes=1000000, backupCount=2)
 handler.setLevel(logging.DEBUG)
 
 # create a logging format
@@ -25,6 +25,7 @@ logger.addHandler(handler)
 DEVID = None
 ROOT = '/home/pi/projects/backend/'
 MQTT = None
+DEVICE_SHADOW = None
 ## CONFIG ##
 
 
@@ -94,13 +95,25 @@ def deviceConfig(delta):
 	return True
 
 def restartServices():
-	pass
+	logger.info('restarting services.')
 
 def shadowDelta(payload, responseStatus, token):
 	logger.info(payload)
+	try:
+		status = deviceConfig(payload['state'])
+		if status:
+			# report state
+			payload = {}
+			payload['state'] = {}
+			payload['state']['reported'] = SETTINGS
+			DEVICE_SHADOW.shadowUpdate(json.dumps(payload), shadowUpdate, 5)
+
+			restartServices()
+	except:
+		logger.error('error', exc_info=True)
 
 def shadowUpdate(payload, responseStatus, token):
-	print payload
+	pass
 
 def closeConnections():
 	try:
@@ -118,7 +131,7 @@ while True:
 				MQTT.connect()
 				logger.info('MQTT CONNECTION OK.')
 
-				DeviceShadow = MQTT.createShadowHandlerWithName(DEVID, True)
+				DEVICE_SHADOW = MQTT.createShadowHandlerWithName(DEVID, True)
 				
 				# Update Shadow
 				loadSettings()
@@ -127,11 +140,11 @@ while True:
 				payload['state'] = {}
 				payload['state']['reported'] = SETTINGS
 
-				DeviceShadow.shadowUpdate(json.dumps(payload), shadowUpdate, 5)
+				DEVICE_SHADOW.shadowUpdate(json.dumps(payload), shadowUpdate, 5)
 				time.sleep(2)
 				
 				# Delta Callback
-				DeviceShadow.shadowRegisterDeltaCallback(shadowDelta)
+				DEVICE_SHADOW.shadowRegisterDeltaCallback(shadowDelta)
 
 				while True:
 					time.sleep(1)
