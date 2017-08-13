@@ -8,9 +8,18 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 ## CONFIG ##
+SETTINGS = {}
+try:
+	SETTINGS = json.loads('config.json')
+except:
+	pass
 SERIAL_PORT = '/dev/sensor1'
 SENSOR = 's1'
-BAUDRATE = None
+BAUDRATE = SETTINGS.get('BAUDRATE', 0)
+BYTESIZE = SETTINGS.get('BYTESIZE', serial.EIGHTBITS)
+PARITY = SETTINGS.get('PARITY', serial.PARITY_NONE)
+STOPBITS = SETTINGS.get('STOPBITS', serial.STOPBITS_ONE)
+XONXOFF = SETTINGS.get('XONXOFF', False)
 REGEX = None
 DB = None
 SER = None
@@ -47,9 +56,10 @@ while True:
 			with serial.Serial() as SER:
 				SER.port = SERIAL_PORT
 				SER.baudrate = BAUDRATE
-				SER.bytesize = serial.EIGHTBITS
-				SER.parity = serial.PARITY_NONE
-				SER.stopbits = serial.STOPBITS_ONE
+				SER.bytesize = BYTESIZE
+				SER.parity = PARITY
+				SER.stopbits = STOPBITS
+				SER.xonxoff = XONXOFF
 				SER.timeout = 5
 
 				while not SER.isOpen():

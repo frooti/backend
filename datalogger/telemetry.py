@@ -6,12 +6,13 @@ import uuid
 import logging
 import os
 from logging.handlers import RotatingFileHandler
+from config import DEVID
 
 ## CONFIG ##
-DEVID = None
 ROOT = '/home/pi/projects/backend/'
 CHANNEL = 'device/'+str(DEVID)
 DB = None
+MQTT = None
 ## CONFIG ##
 
 logging.basicConfig(level=logging.DEBUG)
