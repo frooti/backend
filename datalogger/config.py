@@ -5,7 +5,6 @@ import serial
 import json
 import logging
 from logging.handlers import RotatingFileHandler
-import dbus
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('config')
@@ -98,11 +97,8 @@ def deviceConfig(delta):
 def restartServices():
 	logger.info('RESTARTING SERVICES.')
 	try:
-		sysbus = dbus.SystemBus()
-		systemd1 = sysbus.get_object('org.freedesktop.systemd1', '/org/freedesktop/systemd1')
-		manager = dbus.Interface(systemd1, 'org.freedesktop.systemd1.Manager')
-		job = manager.RestartUnit('sensor1.service', 'fail')
-		job = manager.RestartUnit('sensor2.service', 'fail')
+		os.system('systemctl restart sensor1.service')
+		os.system('systemctl restart sensor2.service')
 	except:
 		logger.error('error', exc_info=True)
 
