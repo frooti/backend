@@ -126,14 +126,6 @@ def shadowGet(payload, responseStatus, token):
 				shadowDelta(json.dumps({'state': delta}), 'accepted', None)
 	except:
 		logger.error('error', exc_info=True)
-	
-	# # Update Shadow
-	# 
-	# # state
-	# payload = {}
-	# payload['state'] = {}
-	# payload['state']['reported'] = SETTINGS
-	# DEVICE_SHADOW.shadowUpdate(payload, shadowUpdate, 5)	
 
 def closeConnections():
 	try:
