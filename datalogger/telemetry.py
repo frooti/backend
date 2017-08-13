@@ -6,9 +6,9 @@ import uuid
 import logging
 import os
 from logging.handlers import RotatingFileHandler
-from config import DEVID
 
 ## CONFIG ##
+from devid import DEVID
 ROOT = '/home/pi/projects/backend/'
 CHANNEL = 'device/'+str(DEVID)
 DB = None

@@ -22,7 +22,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 ## CONFIG ##
-DEVID = None
+from devid import DEVID
 ROOT = '/home/pi/projects/backend/'
 MQTT = None
 DEVICE_SHADOW = None
