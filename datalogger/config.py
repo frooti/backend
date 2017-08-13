@@ -79,7 +79,7 @@ def deviceConfig(delta):
 	try:
 		if 'sensor' in delta:
 			for s in delta['sensor']:
-				if s in ['s1', 's2', 's3', 's4']
+				if s in ['s1', 's2', 's3', 's4']:
 					for p in delta['sensor'][s]:
 						SETTINGS['sensor'][s][p] = delta['sensor'][s][p]
 				else:
