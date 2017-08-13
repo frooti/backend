@@ -58,8 +58,11 @@ def deviceConfig(delta):
 	try:
 		if 'sensor' in delta:
 			for s in delta['sensor']:
-				for p in delta['sensor'][s]:
-					SETTINGS['sensor'][s][p] = delta['sensor'][s][p]
+				if s in ['s1', 's2', 's3', 's4']
+					for p in delta['sensor'][s]:
+						SETTINGS['sensor'][s][p] = delta['sensor'][s][p]
+				else:
+					raise Exception('Invalid sensor name')
 		else:
 			return False
 	except Exception, e:
@@ -68,9 +71,6 @@ def deviceConfig(delta):
 
 	# validation
 	try:
-		if list(set(['s1'])-set(SETTINGS['sensor'].keys())):
-			raise Exception('Invalid sensor name')
-
 		for sensor in SETTINGS['sensor']:		
 			baudrate = int(SETTINGS['sensor'][sensor]['BAUDRATE'])
 			if baudrate<0:
