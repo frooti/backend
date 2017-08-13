@@ -117,6 +117,17 @@ def shadowDelta(payload, responseStatus, token):
 def shadowUpdate(payload, responseStatus, token):
 	pass
 
+def shadowGet(payload, responseStatus, token):
+	print payload
+	print responseStatus
+	# # Update Shadow
+	# loadSettings()
+	# # state
+	# payload = {}
+	# payload['state'] = {}
+	# payload['state']['reported'] = SETTINGS
+	# DEVICE_SHADOW.shadowUpdate(payload, shadowUpdate, 5)	
+
 def closeConnections():
 	try:
 		MQTT.disconnect()
@@ -135,14 +146,7 @@ while True:
 
 				DEVICE_SHADOW = MQTT.createShadowHandlerWithName(DEVID, True)
 				
-				# Update Shadow
-				loadSettings()
-				# state
-				payload = {}
-				payload['state'] = {}
-				payload['state']['reported'] = SETTINGS
-
-				DEVICE_SHADOW.shadowUpdate(json.dumps(payload), shadowUpdate, 5)
+				DEVICE_SHADOW.shadowGet(shadowGet, 5)
 				time.sleep(2)
 				
 				# Delta Callback
