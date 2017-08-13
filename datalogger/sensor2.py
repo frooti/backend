@@ -10,7 +10,7 @@ from logging.handlers import RotatingFileHandler
 ## CONFIG ##
 SETTINGS = {}
 try:
-	SETTINGS = json.loads('config.json')
+	SETTINGS = json.loads('/home/pi/projects/backend/datalogger/config.json')
 except:
 	pass
 SERIAL_PORT = '/dev/sensor2'
