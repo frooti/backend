@@ -24,6 +24,7 @@ logger.addHandler(handler)
 ## CONFIG ##
 from devid import DEVID
 ROOT = '/home/pi/projects/backend/'
+CONFIG = ROOT+'datalogger/config.json'
 MQTT = None
 DEVICE_SHADOW = None
 ## CONFIG ##
@@ -46,7 +47,7 @@ SETTINGS = {
 
 def loadSettings():
 	try:
-		f = open('config.json', 'r')
+		f = open(CONFIG, 'r')
 		SETTINGS = json.loads(f.read())
 	except:
 		pass
@@ -90,7 +91,7 @@ def deviceConfig(delta):
 		logger.error('error', exc_info=True)
 		return False
 
-	f = open('config.json', 'w+')
+	f = open(CONFIG, 'w+')
 	f.write(json.dumps(SETTINGS))
 	return True
 
