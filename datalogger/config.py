@@ -98,8 +98,9 @@ def restartServices():
 	logger.info('restarting services.')
 
 def shadowDelta(payload, responseStatus, token):
-	logger.info(payload)
 	try:
+		loadSettings()
+		logger.info('applying delta.')
 		delta = json.loads(payload)
 		delta = delta['state']
 		status = deviceConfig(delta)
@@ -109,7 +110,6 @@ def shadowDelta(payload, responseStatus, token):
 			payload['state'] = {}
 			payload['state']['reported'] = SETTINGS
 			DEVICE_SHADOW.shadowUpdate(json.dumps(payload), shadowUpdate, 5)
-
 			restartServices()
 	except:
 		logger.error('error', exc_info=True)
@@ -118,10 +118,17 @@ def shadowUpdate(payload, responseStatus, token):
 	pass
 
 def shadowGet(payload, responseStatus, token):
-	print payload
-	print responseStatus
+	try:
+		if responseStatus == 'accepted':
+			payload = json.loads(payload)
+			delta = payload['state'].get('delta', {})
+			if delta:
+				shadowDelta(json.dumps({'state': delta, 'responseStatus':'accepted', 'token':None}))
+	except:
+		logger.error('error', exc_info=True)
+	
 	# # Update Shadow
-	# loadSettings()
+	# 
 	# # state
 	# payload = {}
 	# payload['state'] = {}
@@ -146,9 +153,10 @@ while True:
 
 				DEVICE_SHADOW = MQTT.createShadowHandlerWithName(DEVID, True)
 				
+				# Sync Shadow
 				DEVICE_SHADOW.shadowGet(shadowGet, 5)
 				time.sleep(2)
-				
+
 				# Delta Callback
 				DEVICE_SHADOW.shadowRegisterDeltaCallback(shadowDelta)
 
