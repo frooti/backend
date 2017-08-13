@@ -19,7 +19,7 @@ logger = logging.getLogger('telemetry')
 logger.propagate = False
 
 # create a file handler
-handler = RotatingFileHandler('/var/log/telemetry.log', maxBytes=1000000, backupCount=2)
+handler = RotatingFileHandler('/var/log/backend/telemetry.log', maxBytes=1000000, backupCount=2)
 handler.setLevel(logging.DEBUG)
 
 # create a logging format
