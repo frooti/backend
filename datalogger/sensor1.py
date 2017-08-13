@@ -15,11 +15,11 @@ except:
 	pass
 SERIAL_PORT = '/dev/sensor1'
 SENSOR = 's1'
-BAUDRATE = SETTINGS.get(SENSOR, {}).get('BAUDRATE', 0)
-BYTESIZE = SETTINGS.get(SENSOR, {}).get('BYTESIZE', serial.EIGHTBITS)
-PARITY = SETTINGS.get(SENSOR, {}).get('PARITY', serial.PARITY_NONE)
-STOPBITS = SETTINGS.get(SENSOR, {}).get('STOPBITS', serial.STOPBITS_ONE)
-XONXOFF = SETTINGS.get(SENSOR, {}).get('XONXOFF', False)
+BAUDRATE = SETTINGS.get('sensor', {}).get(SENSOR, {}).get('BAUDRATE', 0)
+BYTESIZE = SETTINGS.get('sensor', {}).get(SENSOR, {}).get('BYTESIZE', serial.EIGHTBITS)
+PARITY = SETTINGS.get('sensor', {}).get(SENSOR, {}).get('PARITY', serial.PARITY_NONE)
+STOPBITS = SETTINGS.get('sensor', {}).get(SENSOR, {}).get('STOPBITS', serial.STOPBITS_ONE)
+XONXOFF = SETTINGS.get('sensor', {}).get(SENSOR, {}).get('XONXOFF', False)
 REGEX = None
 DB = None
 SER = None
